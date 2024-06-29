@@ -50,15 +50,14 @@ https://www.reddit.com/r/bose/comments/1c1zp69/qc45_no_sound/
 - There are some other great works from communitiy for variety of Bose devices:
 https://github.com/bosefirmware/ced
 https://github.com/bosefirmware/bose-dfu
-- `bose-dfu` tool only gives support for devices whose firmware is in `dfu/xvu` format. 
-- Unfortunatelly, Bose NC700 and Bose QC45 is not one of them, they consumes `bin` firmware.
-- Moreover, with recent latest update of `btu` website and `Bose Updater` application, the most popular methods (cheating `Bose Updater` to fetch older firmware versions) is not working anymore.
+- `bose-dfu` tool only gives support for devices whose firmware is in `dfu/xvu` format.
+- Unfortunatelly, Bose NC700 and Bose QC45 is not one of them, they consume `bin` firmware.
+- Moreover, with recent latest updates of `btu` website and `Bose Updater` application, the most popular method (cheating `Bose Updater` to fetch older firmware versions) is not working anymore.
 - So the only possible method is to let `Bose Updater` download what it's allowed to download (latest firmware), then override firmware file with older firmware before `Bose Updater` trying to transfer firmware to device.
 
 ### 3. Steps
 
 #### Firmware download
-- There is no possible ways to get all the firmware version from `download.bose.com` anymore.
 - Base on the latest firmware information, and previous firmware versions on the internet, I was able to download version `4.0.4` and `3.5.0`
 ```
 <INDEX REVISION="01.00.00">
@@ -85,9 +84,9 @@ n.device.getAvailableVersions(function(e, t) {
     t.reverse();
 }
 ```
-Not being able to select version to update, means update action can't be done.
-Hence, we need at least 1 option, which is the latest version of firmware.
-Be notice that, if there is newer firmware version than 4.0.4, then `4.0.4-4360+de6a887` in `Option` html tag needs to be replaced with name of newer firmware version.
+- Not being able to select version to update, means update action can't be done.
+- Hence, we need at least 1 option, which is the latest version of firmware.
+- Be notice that, if there is newer firmware version than 4.0.4, then `4.0.4-4360+de6a887` in `Option` html tag needs to be replaced with name of newer firmware version.
 
 #### Python script
 - Everytime `Bose Updater` downloads a firmware, it will rename firmware `bin` file to `Bose Updater.<nanoid>` , and save it to `C:\Users\<username>\AppData\Local\Temp`
