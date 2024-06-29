@@ -54,6 +54,21 @@ https://github.com/bosefirmware/bose-dfu
 - Unfortunatelly, Bose NC700 and Bose QC45 is not one of them, they consume `bin` firmware.
 - Moreover, with recent latest updates of `btu` website and `Bose Updater` application, the most popular method (cheating `Bose Updater` to fetch older firmware versions) is not working anymore.
 - So the only possible method is to let `Bose Updater` download what it's allowed to download (latest firmware), then override firmware file with older firmware before `Bose Updater` trying to transfer firmware to device.
+```
+# Failed result when trying to pass older version instead of latest one to BoseUpdater
+6/28/2024 19:39:53.729,  Info,       Device version is 4.0.4.4360+de6a887
+6/28/2024 19:39:53.729,  Info,       Device original version is 4.0.4-4360+de6a887
+6/28/2024 19:40:08.245,  Info,       Update: Waiting for extended challenge -> Idle
+6/28/2024 19:45:23.169,  Info,       Beginning update to version 3.5.0-3809+623f836
+6/28/2024 19:45:23.213,  Info,       Update: Idle -> Downloading firmware
+6/28/2024 19:45:24.219,  Info,       DOWNLOADING_FIRMWARE - DONE
+6/28/2024 19:45:24.219,  Info,       Reset Update
+6/28/2024 19:45:25.277,  Info,       Update: Downloading firmware -> Get device state
+6/28/2024 19:45:26.295,  Info,       Update: Get device state -> Synchronize get
+6/28/2024 19:45:27.317,  Info,       Update: Synchronize get -> Init start
+6/28/2024 19:45:28.308,  Error,      Exception caught:
+6/28/2024 19:45:28.308,  Error,      Dumping crash to C:\Users\zmp\AppData\Local\Temp\BoseUpdater_20240628_194528.dmp
+```
 
 ### 3. Steps
 
@@ -97,6 +112,36 @@ n.device.getAvailableVersions(function(e, t) {
   - Transfer firmware to device
 ```
 # Logs located at C:\Users\<username>\AppData\Local\Temp\BoseUpdater.log
+6/28/2024 13:16:13.988,  Info,       Device version is 4.0.4.4360+de6a887
+6/28/2024 13:16:28.017,  Info,       Device original version is 4.0.4-4360+de6a887  # Current version = 4.0.4
+6/29/2024 13:16:48.869,  Info,       Update: Waiting for extended challenge -> Idle
+6/29/2024 13:17:00.261,  Info,       Beginning update to version 4.0.4-4360+de6a887
+6/29/2024 13:17:00.308,  Info,       Update: Idle -> Downloading firmware
+6/29/2024 13:17:03.189,  Info,       Done downloading (result 0) (time 2)
+6/29/2024 13:17:03.366,  Info,       DOWNLOADING_FIRMWARE - DONE                    # File will be overwritten automatically by main.py
+6/29/2024 13:17:03.366,  Info,       Reset Update
+6/29/2024 13:17:08.384,  Info,       Update: Downloading firmware -> Waiting for firmware update reset completion response
+6/29/2024 13:17:12.386,  Info,       Update: Waiting for firmware update reset completion response -> Get device state
+6/29/2024 13:17:13.398,  Info,       Update: Get device state -> Synchronize get
+6/29/2024 13:17:14.416,  Info,       Update: Synchronize get -> Init start
+6/29/2024 13:17:15.443,  Info,       Update: Init start -> Get device state
+6/29/2024 13:17:16.471,  Info,       Downloading firmware to the device...
+6/29/2024 13:17:16.471,  Info,       Update: Get device state -> Data transfer
+6/29/2024 13:17:16.474,  Info,       Transferring firmware to device...
+6/29/2024 13:22:10.730,  Info,       Update: Data transfer -> Empty data transfer
+6/29/2024 13:22:11.767,  Info,       Update: Empty data transfer -> Validate
+6/29/2024 13:22:12.811,  Info,       Update: Validate -> Waiting for validation confirmation
+6/29/2024 13:22:13.816,  Info,       Update: Waiting for validation confirmation -> Run DFU
+6/29/2024 13:22:14.864,  Info,       Update: Run DFU -> Waiting for reset
+6/29/2024 13:22:15.638,  Info,       Update: Waiting for reset -> Waiting for reset completion.
+6/29/2024 13:22:19.039,  Info,       Update: Waiting for reset completion. -> Waiting for final confirmation.
+6/29/2024 13:22:20.036,  Info,       Update: Waiting for final confirmation. -> Waiting for device components
+6/29/2024 13:22:35.374,  Error,      Expecting version to be 4.0.4, read 3.5.0
+6/29/2024 13:22:35.374,  Info,       Update failed                                  # here it's failed because BoseUpdater expects 4.0.4 instead of 3.5.0
+6/29/2024 13:22:35.374,  Info,       Update: Waiting for device components -> Error state
+6/29/2024 13:22:45.718,  Info,       Device version is 3.5.0.3809+623f836
+6/29/2024 13:22:45.718,  Info,       Device original version is 3.5.0-3809+623f836  # Device is now downgraded to 3.5.0
+6/29/2024 13:22:59.476,  Info,       Update: Waiting for extended challenge -> Idle
 ```
 - So, the idea is to replace firmware file with desired firmware after file is completely downloaded, and before it's transferred to device.
 - Python script would do:
@@ -109,6 +154,10 @@ n.device.getAvailableVersions(function(e, t) {
 - The final step `Bose Updater` does after updating is to compare the original version `dtu.bose.com` sent to it, with device's current version
 - Since those versions are different (we sent the latest version to it), result of updating will be failed
 - But after you click `Try Again` on warning popup, new page will show and tell you that `There's an update available for your product!`, which means your device is running on older firmware
+```
+6/29/2024 13:22:35.374,  Error,      Expecting version to be 4.0.4, read 3.5.0
+6/29/2024 13:22:35.374,  Info,       Update failed                                  # here it's failed because BoseUpdater expects 4.0.4 instead of 3.5.0
+```
 
 ### Some notes
 - I'm not an expert in reverse-engineering and embeded-engineering, so I can't write a tool like `bose-dfu`
