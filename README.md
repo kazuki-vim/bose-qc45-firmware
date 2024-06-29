@@ -22,15 +22,16 @@ document.getElementById('smartdevice_targetfirmware').appendChild(new Option('4.
 ## Part 2: Override firmware and update
 - Download desired firmware from this repository, put into `C:\Users\<username>\AppData\Local\Temp` and renamed it to `bose.bin`
 - Setup python-venv as you might want, and install dependencies
-    ```bash
+```bash
 pip3 install -r requirements.txt
-    ```
+```
+
 - Run script to detect firmware is downloaded and override that file with correct timing
 ```bash
 py ./main.py
 ```
 - After script is started, go to website and press `Update Now`
-- Update will be carried on, and finally at 99%, status will be `Failed` with a warning shown (Don't panic! It's expected behavior)
+- Update procedure will be carried on, and finally at 99%, status will be `Failed` with a warning shown (Don't panic! It's expected behavior)
 - <i>You're done. The downgrading process is completed.</i>
 
 ## Background story
@@ -74,7 +75,7 @@ https://github.com/bosefirmware/bose-dfu
 - The link to download firmware will have this format `https://downloads.bose.com/ced/duran/duran_encrypted_prod_<version>-<commit hash>.bin`
 - If you guys can help me download older firmwares, please create PR
 
-### Modify Bose btu website
+#### Modify Bose btu website
 If your Bose QC45 is on latest firmware already, Bose doesn't even allow you to select the latest version
 This is written in their website source code
 ```
@@ -102,18 +103,19 @@ Be notice that, if there is newer firmware version than 4.0.4, then `4.0.4-4360+
 - Python script would do:
   - Detect if new firmware file is downloaded
   - Wait until it's fully downloaded, override with desired firmware
+
 *To be honest, I tried several methods to detect if firmware is completely downloaded, but it's hard to know, so from experience, I set delay time to 3.5s from when the file is originally created.*
 
 #### Why update is failed
-- The final step `Bose Updater` does after updating is to compare the original version `dtu.bose.com` sends to it, with device's current version
+- The final step `Bose Updater` does after updating is to compare the original version `dtu.bose.com` sent to it, with device's current version
 - Since those versions are different (we sent the latest version to it), result of updating will be failed
 - But after you click `Try Again` on warning popup, new page will show and tell you that `There's an update available for your product!`, which means your device is running on older firmware
 
-#### Some notes
+### Some notes
 - I'm not an expert in reverse-engineering and embeded-engineering, so I can't write a tool like `bose-dfu`
 - However the good thing is we still use default `Bose Updater`, which avoids risks when transferring firmware to device
-- If you like my work,T you can by me a coffee
+- If you like my work, you can by me a coffee
 
-#### Useful resources
+### Useful resources
 - Thanks @bosefirmware (https://github.com/bosefirmware) to give me hope and ideas about downgrading firmware.
-- Thanks @suzj and his great manual (https://github.com/sunzj/Way_of_Downgrade_BOSE_QC35ii) that gave me idea about overriding firmware file.
+- Thanks @sunzj and his great manual (https://github.com/sunzj/Way_of_Downgrade_BOSE_QC35ii) that gave me idea about overriding firmware file.
