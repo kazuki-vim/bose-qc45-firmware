@@ -1,5 +1,5 @@
 ## Disclaimer
-- Downgrading is not a officially supported action from Bose
+- Downgrading is not an officially supported action from Bose
 - By following this manual, you need to take all responsibilities for bricking your own device.
 - Currently this method is only tested on Windows
 
