@@ -17,7 +17,7 @@ There are 2 parts need to be executed:
 window.dispatchEvent(new Event('advancedmode_triggered'))
 
 // Append the option to version dropdown list
-document.getElementById('smartdevice_targetfirmware').appendChild(new Option('4.0.4-4360+de6a887', '4.0.4'));
+document.getElementById('smartdevice_targetfirmware').appendChild(new Option('4.0.4-4360+de6a887', '4.0.4-4360+de6a887'));
 ```
 ## Part 2: Override firmware and update
 - Download desired firmware from this repository, put into `C:\Users\<username>\AppData\Local\Temp` and renamed it to `bose.bin`
@@ -137,7 +137,7 @@ n.device.getAvailableVersions(function(e, t) {
 6/29/2024 13:22:19.039,  Info,       Update: Waiting for reset completion. -> Waiting for final confirmation.
 6/29/2024 13:22:20.036,  Info,       Update: Waiting for final confirmation. -> Waiting for device components
 6/29/2024 13:22:35.374,  Error,      Expecting version to be 4.0.4, read 3.5.0
-6/29/2024 13:22:35.374,  Info,       Update failed                                  # here it's failed because BoseUpdater expects 4.0.4 instead of 3.5.0
+> 6/29/2024 13:22:35.374,  Info,       Update failed                                  # here it's failed because BoseUpdater expects 4.0.4 instead of 3.5.0
 6/29/2024 13:22:35.374,  Info,       Update: Waiting for device components -> Error state
 6/29/2024 13:22:45.718,  Info,       Device version is 3.5.0.3809+623f836
 6/29/2024 13:22:45.718,  Info,       Device original version is 3.5.0-3809+623f836  # Device is now downgraded to 3.5.0
