@@ -1,4 +1,5 @@
 ## Disclaimer
+- !! After confirmation, although downgrade the firmware, the issue is not fixed !!
 - Downgrading is not an officially supported action from Bose
 - By following this manual, you need to take all responsibilities for bricking your own device.
 - Currently this method is only tested on Windows
