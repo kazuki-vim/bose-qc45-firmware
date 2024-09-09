@@ -21,19 +21,22 @@ window.dispatchEvent(new Event('advancedmode_triggered'))
 document.getElementById('smartdevice_targetfirmware').appendChild(new Option('4.0.4-4360+de6a887', '4.0.4-4360+de6a887'));
 ```
 ## Part 2: Override firmware and update
-- Download desired firmware from this repository, put into `C:\Users\<username>\AppData\Local\Temp` and renamed it to `bose.bin`
+- Download desired firmware from this repository
 - Setup python-venv as you might want, and install dependencies
 ```bash
 pip3 install -r requirements.txt
 ```
 
-- Run script to detect firmware is downloaded and override that file with correct timing
+- Run script to detect the firmware file name downloaded by `Bose Updater` and overwrite it with our specified file in endless loop. If the firmware path is not specified in the command line arg, then `firmware/duran_encrypted_prod_1.0.3-ee3f55e.bin` is used by default (from current working dir)
+
 ```bash
-py ./main.py
+py ./main.py firmware/duran_encrypted_prod_1.0.3-ee3f55e.bin
 ```
 - After script is started, go to website and press `Update Now`
 - Update procedure will be carried on, and finally at 99%, status will be `Failed` with a warning shown (Don't panic! It's expected behavior)
+- After that, stop the script using `Ctrl + C`. It will not work again for a second time if not relaunched
 - <i>You're done. The downgrading process is completed.</i>
+- Don't forget to uninstall `Bose Music` app from mobile device, or the firmware will be updated back automatically
 
 ## Background story
 ### 1. Why downgrading
